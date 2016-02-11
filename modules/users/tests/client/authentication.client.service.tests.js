@@ -100,11 +100,16 @@
         }));
       });
 
+
+
+
+
     });
 
     describe('authenticated', function () {
 
       describe('refresh()', function () {
+
         //Currently breaks
         //Authentication.refresh();
 
@@ -138,6 +143,7 @@
       });
 
     });
+
 
   });
 }());

@@ -5,6 +5,7 @@
   describe('PasswordController', function() {
     // Initialize global variables
     var PasswordController,
+      scope,
       $scope,
       $httpBackend,
       $stateParams,
@@ -193,7 +194,7 @@
           });
 
           afterEach(inject(function (_Authentication_) {
-            $scope.vm.authentication.signout();
+            _Authentication_.signout();
           }));
         });
       });

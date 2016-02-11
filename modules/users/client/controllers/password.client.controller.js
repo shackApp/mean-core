@@ -20,7 +20,7 @@
 
     // Submit forgotten password account id
     vm.askForPasswordReset = function (isValid) {
-      vm.success = vm.error = null;
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'forgotPasswordForm');
@@ -36,13 +36,13 @@
       }).error(function (response) {
         // Show user error message and clear form
         vm.credentials = null;
-        vm.error = response.message;
+        $scope.error = response.message;
       });
     };
 
     // Change user password
     vm.resetUserPassword = function (isValid) {
-      vm.success = vm.error = null;
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'resetPasswordForm');
@@ -60,7 +60,7 @@
         // And redirect to the index page
         $location.path('/password/reset/success');
       }).error(function (response) {
-        vm.error = response.message;
+        $scope.error = response.message;
       });
     };
   }
