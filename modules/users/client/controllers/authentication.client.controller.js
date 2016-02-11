@@ -22,7 +22,7 @@
     }
 
     vm.signup = function (isValid) {
-      vm.error = null;
+      $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -38,12 +38,12 @@
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        vm.error = response.message;
+        $scope.error = response.message;
       });
     };
 
     vm.signin = function (isValid) {
-      vm.error = null;
+      $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -59,7 +59,7 @@
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        vm.error = response.message;
+        $scope.error = response.message;
       });
     };
 
@@ -72,5 +72,7 @@
       // Effectively call OAuth authentication route:
       $window.location.href = url;
     };
+
+    console.log('AuthenticationController::Init', vm);
   }
 })();

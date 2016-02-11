@@ -8,6 +8,7 @@
   Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state'];
 
   function Authentication($q, $resource, $http, $location, $state) {
+
     var readyPromise = $q.defer();
 
     var service = {

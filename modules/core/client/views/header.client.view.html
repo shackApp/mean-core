@@ -6,7 +6,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a ui-sref="home" class="navbar-brand">SHACKAPP</a>
+    <a ui-sref="home" class="navbar-brand">MODERN-MEAN</a>
   </div>
   <nav class="collapse navbar-collapse" uib-collapse="!vm.isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="vm.menu.shouldRender(vm.authentication.user);">
@@ -14,7 +14,7 @@
         <a ng-switch-when="dropdown" class="dropdown-toggle" uib-dropdown-toggle role="button">{{::item.title}} <i class="fa fa-angle-down"></i></a>
         <ul ng-switch-when="dropdown" class="dropdown-menu">
           <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(vm.authentication.user);" ui-sref-active="active">
-            <a ui-sref="{{subitem.state}}"><i class="fa {{subitem.icon}} fa-fw"></i> {{subitem.title}}</a>
+            <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
           </li>
         </ul>
         <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>

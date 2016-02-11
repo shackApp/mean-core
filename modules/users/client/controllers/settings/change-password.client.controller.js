@@ -15,7 +15,7 @@
 
     // Change user password
     vm.changeUserPassword = function (isValid) {
-      vm.success = vm.error = null;
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'passwordForm');
@@ -26,10 +26,10 @@
       $http.post('/api/users/password', vm.passwordDetails).success(function (response) {
         // If successful show success message and clear form
         $scope.$broadcast('show-errors-reset', 'passwordForm');
-        vm.success = true;
+        $scope.success = true;
         vm.passwordDetails = null;
       }).error(function (response) {
-        vm.error = response.message;
+        $scope.error = response.message;
       });
     };
   }

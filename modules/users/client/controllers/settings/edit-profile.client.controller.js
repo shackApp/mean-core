@@ -12,8 +12,9 @@
 
     vm.user = Authentication.user;
 
+    // Update a user profile
     vm.updateUserProfile = function (isValid) {
-      vm.success = vm.error = null;
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -21,15 +22,15 @@
         return false;
       }
 
-      var user = new Users(vm.user);
+      var user = new Users($scope.user);
 
       user.$update(function (response) {
         $scope.$broadcast('show-errors-reset', 'userForm');
 
-        vm.success = true;
+        $scope.success = true;
         Authentication.user = response;
       }, function (response) {
-        vm.error = response.data.message;
+        $scope.error = response.data.message;
       });
     };
   }

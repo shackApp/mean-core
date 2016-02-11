@@ -1,3 +1,9 @@
+.content {
+  margin-top: 50px;
+}
+.undecorated-link:hover {
+  text-decoration: none;
+}
 [ng\:cloak],
 [ng-cloak],
 [x-ng-cloak],
@@ -28,27 +34,4 @@ a:hover .header-profile-image {
 }
 .has-error .help-inline.error-text {
   display: inline;
-}
-
-.content {
-  margin-top: 50px;
-  margin-bottom: 40px;
-  font-family: 'Open Sans', sans-serif;
-}
-
-/* page-header fix */
-.page-header h1 {
-  margin-top: -25px;
-}
-
-@media (min-width: 970px) {
-  .page-header input {
-    margin-top: -20px;
-  }
-}
-
-@media (max-width: 970px) {
-  .page-header input {
-    margin-top: 0;
-  }
 }
