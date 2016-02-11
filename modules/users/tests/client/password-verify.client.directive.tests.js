@@ -4,7 +4,7 @@
   // Password Verify Directive Spec
   describe('PasswordVerifyDirective', function() {
     // Initialize global variables
-    var scope,
+    var $scope,
       element,
       $compile,
       form;
@@ -14,10 +14,10 @@
 
     beforeEach(inject(function(_$rootScope_, _$compile_) {
       // Set a new global scope
-      scope = _$rootScope_.$new();
+      $scope = _$rootScope_.$new();
       $compile = _$compile_;
 
-      scope.passwordMock = {
+      $scope.passwordMock = {
         newPassword: 'P@ssw0rd!!',
         verifyPassword: 'P@ssw0rd!!'
       };
@@ -33,11 +33,11 @@
       // inject allows you to use AngularJS dependency injection
       // to retrieve and use other services
       inject(function($compile) {
-        var form = $compile(template)(scope);
+        var form = $compile(template)($scope);
         element = form.find('div');
 
         // $digest is necessary to finalize the directive generation
-        scope.$digest();
+        $scope.$digest();
       });
     }
 
@@ -51,35 +51,35 @@
       });
 
       it('should check form validity upon initializing', function () {
-        expect(scope.form.$valid).toBeTruthy();
+        expect($scope.form.$valid).toBeTruthy();
       });
 
     });
 
     it('should not show error when passwords match', function () {
       compileDirective();
-      scope.passwordMock.newPassword = 'P@ssw0rd!!';
-      scope.passwordMock.verifyPassword = 'P@ssw0rd!!';
-      scope.$digest();
+      $scope.passwordMock.newPassword = 'P@ssw0rd!!';
+      $scope.passwordMock.verifyPassword = 'P@ssw0rd!!';
+      $scope.$digest();
 
-      expect(scope.form.newPassword.$valid).toBeTruthy();
-      expect(scope.form.newPassword.$error).toEqual({});
-      expect(scope.form.verifyPassword.$valid).toBeTruthy();
-      expect(scope.form.verifyPassword.$error).toEqual({});
-      expect(scope.form.$valid).toBeTruthy();
+      expect($scope.form.newPassword.$valid).toBeTruthy();
+      expect($scope.form.newPassword.$error).toEqual({});
+      expect($scope.form.verifyPassword.$valid).toBeTruthy();
+      expect($scope.form.verifyPassword.$error).toEqual({});
+      expect($scope.form.$valid).toBeTruthy();
     });
 
     it('should show error when passwords do not match', function () {
       compileDirective();
-      scope.passwordMock.newPassword = 'P@ssw0rd!!';
-      scope.passwordMock.verifyPassword = 'P@ssw0rd!';
-      scope.$digest();
+      $scope.passwordMock.newPassword = 'P@ssw0rd!!';
+      $scope.passwordMock.verifyPassword = 'P@ssw0rd!';
+      $scope.$digest();
 
-      expect(scope.form.newPassword.$valid).toBeTruthy();
-      expect(scope.form.newPassword.$error).toEqual({});
-      expect(scope.form.verifyPassword.$valid).toBeFalsy();
-      expect(scope.form.verifyPassword.$error.passwordVerify).toBeTruthy();
-      expect(scope.form.$valid).toBeFalsy();
+      expect($scope.form.newPassword.$valid).toBeTruthy();
+      expect($scope.form.newPassword.$error).toEqual({});
+      expect($scope.form.verifyPassword.$valid).toBeFalsy();
+      expect($scope.form.verifyPassword.$error.passwordVerify).toBeTruthy();
+      expect($scope.form.$valid).toBeFalsy();
     });
 
   });
