@@ -42,7 +42,5 @@
       icon: 'fa-key',
       state: 'settings.password'
     });
-
   }
-
 })();

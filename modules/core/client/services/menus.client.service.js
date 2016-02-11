@@ -6,13 +6,9 @@
     .service('Menus', Menus);
 
   function Menus() {
-    // Define a set of default roles
     this.defaultRoles = ['user', 'admin'];
-
-    // Define the menus object
     this.menus = {};
 
-    // A private function for rendering decision
     var shouldRender = function (user) {
       if (!!~this.roles.indexOf('*')) {
         return true;
@@ -32,7 +28,6 @@
       return false;
     };
 
-    // Validate menu existance
     this.validateMenuExistance = function (menuId) {
       if (menuId && menuId.length) {
         if (this.menus[menuId]) {
