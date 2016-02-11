@@ -9,7 +9,7 @@
 
   function HomeController(Authentication) {
     var vm = this;
-    // This provides Authentication context.
+
     vm.authentication = Authentication;
   }
 })();
