@@ -4,7 +4,7 @@
   // Password Validator Directive Spec
   describe('PasswordValidatorDirective', function() {
     // Initialize global variables
-    var scope,
+    var $scope,
       element,
       $compile,
       form;
@@ -14,10 +14,10 @@
 
     beforeEach(inject(function(_$rootScope_, _$compile_) {
       // Set a new global scope
-      scope = _$rootScope_.$new();
+      $scope = _$rootScope_.$new();
       $compile = _$compile_;
 
-      scope.passwordMock = {
+      $scope.passwordMock = {
         password: 'P@ssw0rd!!'
       };
     }));
@@ -31,11 +31,11 @@
       // inject allows you to use AngularJS dependency injection
       // to retrieve and use other services
       inject(function($compile) {
-        var form = $compile(template)(scope);
+        var form = $compile(template)($scope);
         element = form.find('div');
 
         // $digest is necessary to finalize the directive generation
-        scope.$digest();
+        $scope.$digest();
       });
     }
 
@@ -49,159 +49,159 @@
       });
 
       it('should check form validity upon initializing', function () {
-        expect(scope.form.$valid).toBeTruthy();
+        expect($scope.form.$valid).toBeTruthy();
       });
 
     });
 
     it('should set form to invalid with empty password', function () {
-      scope.passwordMock.password = '';
+      $scope.passwordMock.password = '';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeTruthy();
-      expect(scope.requirementsColor).toEqual(undefined);
-      expect(scope.requirementsProgress).toEqual(undefined);
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeTruthy();
+      expect($scope.requirementsColor).toEqual(undefined);
+      expect($scope.requirementsProgress).toEqual(undefined);
     });
 
     it('should be valid when password meets requirements - "P@ssw0rd!!""', function() {
-      scope.passwordMock.password = 'P@ssw0rd!!';
+      $scope.passwordMock.password = 'P@ssw0rd!!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeTruthy();
-      expect(scope.form.password.$error).toEqual({});
-      expect(scope.requirementsColor).toEqual('success');
-      expect(scope.requirementsProgress).toEqual('100');
+      expect($scope.form.password.$valid).toBeTruthy();
+      expect($scope.form.password.$error).toEqual({});
+      expect($scope.requirementsColor).toEqual('success');
+      expect($scope.requirementsProgress).toEqual('100');
     });
 
     it('should be valid when password meets requirements with a passphrase', function() {
-      scope.passwordMock.password = 'Open-Source Full-Stack Solution for SHACKAPP';
+      $scope.passwordMock.password = 'Open-Source Full-Stack Solution for SHACKAPP';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeTruthy();
-      expect(scope.form.password.$error).toEqual({});
-      expect(scope.requirementsColor).toEqual('success');
-      expect(scope.requirementsProgress).toEqual('100');
+      expect($scope.form.password.$valid).toBeTruthy();
+      expect($scope.form.password.$error).toEqual({});
+      expect($scope.requirementsColor).toEqual('success');
+      expect($scope.requirementsProgress).toEqual('100');
     });
 
     it('should not allow a less than 10 characters long - "P@$$w0rd!"', function() {
-      scope.passwordMock.password = 'P@$$w0rd!';
+      $scope.passwordMock.password = 'P@$$w0rd!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must be at least 10 characters long.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password must be at least 10 characters long.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should not allow a greater than 128 characters long', function() {
-      scope.passwordMock.password = ')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+';
+      $scope.passwordMock.password = ')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must be fewer than 128 characters.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password must be fewer than 128 characters.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should not allow more than 3 or more repeating characters - "P@$$w0rd!!!"', function() {
-      scope.passwordMock.password = 'P@$$w0rd!!!';
+      $scope.passwordMock.password = 'P@$$w0rd!!!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password may not contain sequences of three or more repeated characters.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password may not contain sequences of three or more repeated characters.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should not allow a password with no uppercase letters - "p@$$w0rd!!"', function() {
-      scope.passwordMock.password = 'p@$$w0rd!!';
+      $scope.passwordMock.password = 'p@$$w0rd!!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must contain at least one uppercase letter.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password must contain at least one uppercase letter.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should not allow a password with less than one number - "P@$$word!!"', function() {
-      scope.passwordMock.password = 'P@$$word!!';
+      $scope.passwordMock.password = 'P@$$word!!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must contain at least one number.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password must contain at least one number.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should not allow a password with less than one special character - "Passw0rdss"', function() {
-      scope.passwordMock.password = 'Passw0rdss';
+      $scope.passwordMock.password = 'Passw0rdss';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.form.password.$valid).toBeFalsy();
-      expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must contain at least one special character.']);
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.form.password.$valid).toBeFalsy();
+      expect($scope.form.password.$error.required).toBeFalsy();
+      expect($scope.passwordErrors).toEqual(['The password must contain at least one special character.']);
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should show 20% progress and "danger" color', function() {
-      scope.passwordMock.password = 'P';
+      $scope.passwordMock.password = 'P';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.requirementsColor).toEqual('danger');
-      expect(scope.requirementsProgress).toEqual('20');
+      expect($scope.requirementsColor).toEqual('danger');
+      expect($scope.requirementsProgress).toEqual('20');
     });
 
     it('should show 40% progress and "warning" color', function() {
-      scope.passwordMock.password = 'Pa';
+      $scope.passwordMock.password = 'Pa';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.requirementsColor).toEqual('warning');
-      expect(scope.requirementsProgress).toEqual('40');
+      expect($scope.requirementsColor).toEqual('warning');
+      expect($scope.requirementsProgress).toEqual('40');
     });
 
     it('should show 60% progress and "info" color', function() {
-      scope.passwordMock.password = 'Pa$';
+      $scope.passwordMock.password = 'Pa$';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.requirementsColor).toEqual('info');
-      expect(scope.requirementsProgress).toEqual('60');
+      expect($scope.requirementsColor).toEqual('info');
+      expect($scope.requirementsProgress).toEqual('60');
     });
 
     it('should show 80% progress and "primary" color', function() {
-      scope.passwordMock.password = 'Pa$$w0rd';
+      $scope.passwordMock.password = 'Pa$$w0rd';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.requirementsColor).toEqual('primary');
-      expect(scope.requirementsProgress).toEqual('80');
+      expect($scope.requirementsColor).toEqual('primary');
+      expect($scope.requirementsProgress).toEqual('80');
     });
 
     it('should show 100% progress and "success" color', function() {
-      scope.passwordMock.password = 'Pa$$w0rd!!';
+      $scope.passwordMock.password = 'Pa$$w0rd!!';
       compileDirective();
-      scope.$digest();
+      $scope.$digest();
 
-      expect(scope.requirementsColor).toEqual('success');
-      expect(scope.requirementsProgress).toEqual('100');
+      expect($scope.requirementsColor).toEqual('success');
+      expect($scope.requirementsProgress).toEqual('100');
     });
 
   });

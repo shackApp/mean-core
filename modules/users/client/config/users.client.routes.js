@@ -9,7 +9,6 @@
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
-    // Users state routing
     $stateProvider
       .state('settings', {
         abstract: true,

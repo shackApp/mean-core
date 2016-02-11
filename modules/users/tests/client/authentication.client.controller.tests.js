@@ -5,12 +5,12 @@
   describe('AuthenticationController', function () {
     // Initialize global variables
     var AuthenticationController,
-      Authentication,
+      $scope,
       $httpBackend,
       $stateParams,
       $state,
       $location,
-      $scope;
+      Authentication;
 
     beforeEach(function () {
       jasmine.addMatchers({
@@ -52,44 +52,44 @@
         Authentication.signout();
       }));
 
-      describe('$scope.vm.signin()', function () {
+      describe('$scope.signin()', function () {
         it('should login with a correct user and password', function () {
           // Test expected GET request
-          $httpBackend.when('POST', '/api/auth/signin').respond(200, { user: { name : 'fred@test.com' } });
+          $httpBackend.when('POST', '/api/auth/signin').respond(200, { user: { name : 'Fred' } });
 
           $scope.vm.signin(true);
           $httpBackend.flush();
 
           // Test scope value
-          expect($scope.vm.authentication.user.name).toEqual('fred@test.com');
+          expect($scope.vm.authentication.user.name).toEqual('Fred');
           expect($location.url()).toEqual('/');
         });
 
-//        it('should be redirected to previous state after successful login',
-//          inject(function (_$state_) {
-//            $state = _$state_;
-//            $state.previous = {
-//              state: {
-//                name: 'articles.create'
-//              },
-//              params: {},
-//              href: '/articles/create'
-//            };
-//
-//            spyOn($state, 'transitionTo');
-//            spyOn($state, 'go');
-//
-//            // Test expected GET request
-//            $httpBackend.when('POST', '/api/auth/signin').respond(200, 'Fred');
-//
-//            $scope.vm.signin(true);
-//            $httpBackend.flush();
+        it('should be redirected to previous state after successful login',
+          inject(function (_$state_) {
+            $state = _$state_;
+            $state.previous = {
+              state: {
+                name: 'articles.create'
+              },
+              params: {},
+              href: '/articles/create'
+            };
 
-//            // Test scope value
-//            expect($state.go).toHaveBeenCalled();
-//            expect($state.go).toHaveBeenCalledWith($state.previous.state.name, $state.previous.params);
+            spyOn($state, 'transitionTo');
+            spyOn($state, 'go');
 
-//          }));
+            // Test expected GET request
+            $httpBackend.when('POST', '/api/auth/signin').respond(200, 'Fred');
+
+            $scope.vm.signin(true);
+            $httpBackend.flush();
+
+            // Test scope value
+            expect($state.go).toHaveBeenCalled();
+            expect($state.go).toHaveBeenCalledWith($state.previous.state.name, $state.previous.params);
+
+          }));
 
         it('should fail to log in with nothing', function () {
           // Test expected POST request
@@ -122,17 +122,17 @@
         });
       });
 
-      describe('$scope.vm.signup()', function () {
+      describe('$scope.signup()', function () {
         it('should register with correct data', function () {
           // Test expected GET request
-          $scope.vm.authentication.user = 'fred@test.com';
-          $httpBackend.when('POST', '/api/auth/signup').respond(200, { user: { name : 'fred@test.com' } });
+          $scope.vm.authentication.user = 'Fred';
+          $httpBackend.when('POST', '/api/auth/signup').respond(200, { user: { name : 'Fred' } });
 
           $scope.vm.signup(true);
           $httpBackend.flush();
 
           // test scope value
-          expect($scope.vm.authentication.user.name).toBe('fred@test.com');
+          expect($scope.vm.authentication.user.name).toBe('Fred');
           expect($scope.error).toEqual(null);
           expect($location.url()).toBe('/');
         });
